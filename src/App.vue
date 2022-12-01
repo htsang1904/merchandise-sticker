@@ -128,7 +128,7 @@
           <span class="template-header" style="background-color: white; width: 100%;">Mẫu in</span>
         </el-row>
         <el-divider></el-divider>
-        <el-row type="flex" justify="center" style="padding: 20px;">
+        <el-row id="merchandise-sticker" type="flex" justify="center" style="padding: 20px;">
 
             <div class="inner-sticker" style="font-size:16px;width:59mm;min-height:35mm;padding:2mm;margin:2px;position:relative;border:1px dotted #f1f1f1;page-break-before: always; background-color: #fff; box-shadow: 0 0 10px #DCDFE6;">
               <div class="sticker-title"><span>Tên SP:  </span> {{ListProduct[0].TenSp}} </div>
@@ -174,7 +174,7 @@
               fit="cover">
             </el-image>  
         </el-radio>
-        <el-button style="margin-top: 40px; margin-right: 10px; position: absolute; bottom: 10px; right: 10px; " type="danger"> Xuất file PDF</el-button>
+        <el-button @click="makePDF" style="margin-top: 40px; margin-right: 10px; position: absolute; bottom: 10px; right: 10px; " type="danger"> Xuất file PDF</el-button>
       </div>
     </el-col>
   </el-row>
@@ -182,6 +182,8 @@
 </template>
 <script>
 import { cloneDeep } from 'lodash';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 export default {
   data() {
     return {
@@ -217,7 +219,16 @@ export default {
     },
     deleteRow(index, rows) {
         rows.splice(index, 1);
-      },
+    },
+    makePDF() {
+      window.html2canvas = html2canvas;
+      var doc = new jsPDF("p","pt","a4");
+      doc.html(document.querySelector("#merchandise-sticker"), {
+        callback: function(pdf) {
+          pdf.save("mypdf.pdf")
+        }
+      })
+    },
   },
   components: {
   },
