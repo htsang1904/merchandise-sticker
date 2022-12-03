@@ -11,13 +11,16 @@
     "@handsontable/vue": "^12.2.0",
     "core-js": "^3.8.3",
     "element-ui": "^2.4.5",
+    "file-system": "^2.2.2",
     "handsontable": "^12.2.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
+    "pdfmake": "^0.2.6",
     "sass": "^1.56.1",
     "sass-loader": "^13.2.0",
-    "vue": "^2.6.14"
+    "vue": "^2.6.14",
+    "vue-html2pdf": "^1.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
