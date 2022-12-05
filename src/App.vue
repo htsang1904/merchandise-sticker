@@ -62,12 +62,12 @@
             <span class="template-header" style="background-color: white; width: 100%;">Mẫu in</span>
           </el-row>
           <el-divider></el-divider>
-          <div>
+          <div style="display: flex;justify-content: center;margin-top: 20px;">
           <div id="print-pdf">
-            <div id="row-sticker" v-for="(page, index) in productRows" :key="index">
+            <div id="row-sticker" v-for="(page, index) in productRows" :key="index" style="page-break-after: always;">
                   <div class="inner-sticker"
                     v-for="(product, index) in page" :key="index"
-                    style="display:inline-block;font-size:16px;width:47mm;min-height:32mm;padding:2mm;margin:2px;position:relative;border:1px dotted #f1f1f1;background-color: #fff; box-shadow: 0 0 5px #909399;">
+                    style="display:inline-block;font-size:10px;width:37mm;min-height:22mm;padding:1mm;margin:0;position:relative;border:1px dotted #f1f1f1;background-color: #fff; box-shadow: 0 0 1px #909399;">
                     <div class="sticker-title"><span>Tên SP: </span> {{ product.name }} </div>
                     <div class="sticker-title"><span>NSX: </span> {{ product.createdDate }} </div>
                     <div class="sticker-title"><span>HSD: </span> {{ product.expiredAt }} </div>
@@ -97,7 +97,7 @@
               src="https://giayinnhiet.com.vn/images/product/1615802075cR5YILivde.jpeg" fit="cover">
             </el-image>
           </el-radio>
-          <el-button @click=""
+          <el-button @click="makePDF"
             style="margin-top: 40px; margin-right: 10px; position: absolute; bottom: 10px; right: 10px; " type="danger">
             Xuất file PDF</el-button>
         </div>
@@ -137,9 +137,12 @@ export default {
       rows.splice(index, 1);
     },
     makePDF() {
-      this.$refs.html2Pdf.generatePdf()
+      var prtContent = document.getElementById("print-pdf");
+      var WinPrint = window.open();
+      WinPrint.document.write(prtContent.innerHTML);
+      WinPrint.document.close();
+      WinPrint.print();
     },
-
     diviceForRows() {
       let productRows = []
       console.log(this.quantityPerRow)
@@ -179,15 +182,13 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style  lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 * {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
 }
-
 #label {
   height: auto;
   background-color: #E4E7ED;
@@ -228,7 +229,6 @@ export default {
       }
     }
   }
-
   .el-divider.el-divider--horizontal {
     margin: 10px 0;
   }
